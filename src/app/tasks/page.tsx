@@ -1,11 +1,19 @@
+"use client";
+
+import { CreateTaskButton } from "@/components/CreateTaskButton";
 import { PageHeader } from "@/components/PageHeader";
 import { TaskGrid } from "@/components/TaskGrid";
-import { tasks } from "@/data/tasks";
+import { useTasks } from "@/hooks/useTasks";
 
 export default function TasksPage() {
+  const { tasks, addTask } = useTasks();
+
   return (
     <>
-      <PageHeader title="Tasks" description="All tasks, from local mock data." />
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <PageHeader title="Tasks" description="All tasks." />
+        <CreateTaskButton onCreateTask={addTask} />
+      </div>
       <TaskGrid tasks={tasks} />
     </>
   );
