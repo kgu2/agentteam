@@ -1,22 +1,29 @@
+"use client";
+
+import { CreateTaskButton } from "@/components/CreateTaskButton";
 import { PageHeader } from "@/components/PageHeader";
 import { StatCard } from "@/components/StatCard";
 import { TaskGrid } from "@/components/TaskGrid";
-import { tasks } from "@/data/tasks";
+import { useTasks } from "@/hooks/useTasks";
 import { STATUS_LABELS, countByStatus } from "@/lib/tasks";
 import type { TaskStatus } from "@/types/task";
 
 const statuses: TaskStatus[] = ["todo", "in-progress", "review", "done"];
 
 export default function DashboardPage() {
+  const { tasks, addTask } = useTasks();
   const counts = countByStatus(tasks);
   const active = tasks.filter((t) => t.status !== "done").slice(0, 6);
 
   return (
     <>
-      <PageHeader
-        title="Dashboard"
-        description="An overview of your team's work."
-      />
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <PageHeader
+          title="Dashboard"
+          description="An overview of your team's work."
+        />
+        <CreateTaskButton onCreateTask={addTask} />
+      </div>
       <section
         aria-label="Task summary"
         className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4"
